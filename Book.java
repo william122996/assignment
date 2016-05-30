@@ -9,15 +9,7 @@ public class Book extends Item {
 	private String bookISBN13;
 	private String bookFiction;
 	
-	// No-args constructor
 	public Book() {
-		super();
-		setBookTitle("");
-		setBookAuthor("");
-		setBookPublisher("");
-		setBookISBN10("");
-		setBookISBN13("");
-		setBookFiction("");
 	}
 	
 	// Constructor
@@ -84,10 +76,8 @@ public class Book extends Item {
 
 	@Override
 	public String toString() {
-		return "Book [bookTitle=" + bookTitle + ", bookAuthor=" + bookAuthor + ", bookPublisher=" + bookPublisher
-				+ ", bookISBN10=" + bookISBN10 + ", bookISBN13=" + bookISBN13 + ", bookFiction=" + bookFiction
-				+ ", toString()=" + super.toString() + "]";
+		return super.toString() + "\nBook Title:\t" + bookTitle + "\nBook Author:\t" + bookAuthor + "\nBook Publisher:\t"
+				+ bookPublisher + "\nISBN-10:\t" + bookISBN10 + "\nISBN-13:\t" + bookISBN13 + "\nFiction:\t" + bookFiction;
 	}
-	
 
 }

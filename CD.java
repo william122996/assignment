@@ -1,29 +1,23 @@
 package prg1203.assignment;
 
+import java.util.Arrays;
+
 public class CD extends Item {
 
 	private String cdAlbumTitle;
 	private String cdDescription;
 	private String cdDistributor;
-	private int cdNumberOfTrack; // Use array.length - 1
-	private String[] cdTrackListing; // Array of tracks name
+	private int cdNumberOfTrack;
+	private String[] cdTrackListing;
 	
-	// No-args constructor
 	public CD() {
-		super();
-		setCDAlbumTitle("");
-		setCDDescription("");
-		setCDDistributor("");
-		setCDNumberOfTrack(0);
-		// TODO Initialise an empty String array
-		//setCDTrackListing();
 	}
 	
 	// Constructor 
 	public CD(String itemCode, int itemQuantity, double itemCost,
 			double itemPrice, boolean itemStatus, int itemDiscount,
-			String cdAlbumTitle, String cdDescription, int cdNumberOfTrack,
-			String[] cdTrackListing) {
+			String cdAlbumTitle, String cdDescription,
+			String cdDistributor, int cdNumberOfTrack, String[] cdTrackListing) {
 		super(itemCode, itemQuantity, itemCost, itemPrice, itemStatus, itemDiscount);
 		setCDAlbumTitle(cdAlbumTitle);
 		setCDDescription(cdDescription);
@@ -31,7 +25,7 @@ public class CD extends Item {
 		setCDNumberOfTrack(cdNumberOfTrack);
 		setCDTrackListing(cdTrackListing);
 	}
-	
+
 	public String getCDAlbumTitle() {
 		return this.cdAlbumTitle;
 	}
@@ -71,4 +65,12 @@ public class CD extends Item {
 	public void setCDTrackListing(String[] cdTrackListing) {
 		this.cdTrackListing = cdTrackListing;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "\nAlbum Title:\t" + cdAlbumTitle + "\nDescription:\t" + cdDescription + "\nDistributor:\t"
+				+ cdDistributor + "\nNo. of Track:\t" + cdNumberOfTrack + "\nTrack Listing:\t"
+				+ Arrays.toString(cdTrackListing);
+	}
+	
 }

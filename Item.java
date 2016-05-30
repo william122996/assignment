@@ -79,8 +79,8 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "Item [itemCode=" + itemCode + ", itemQuantity=" + itemQuantity + ", itemCost=" + itemCost
-				+ ", itemPrice=" + itemPrice + ", itemStatus=" + itemStatus + ", itemDiscount=" + itemDiscount + "]";
+		return "Item Code:\t" + itemCode + "\nItem Quantity:\t" + itemQuantity + "\nItem Cost:\t$" + itemCost
+				+ "\nItem Price:\t$" + itemPrice + "\nItem Status:\t" + itemStatus + "\nItem Discount:\t" + itemDiscount + "%";
 	}
 	
 }

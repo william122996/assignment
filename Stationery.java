@@ -8,11 +8,6 @@ public class Stationery extends Item {
 	private String stationeryBarcode13;
 
 	public Stationery() {
-		super();
-		setStationeryBrandName("");
-		setStationeryType("");
-		setStationeryManufacturer("");
-		setStationeryBarcode13("");
 	}
 
 	public Stationery(String itemCode, int itemQuantity, double itemCost,
@@ -58,4 +53,9 @@ public class Stationery extends Item {
 		this.stationeryBarcode13 = stationeryBarcode13;
 	}
 	
+	@Override
+	public String toString() {
+		return super.toString() + "\nBrand Name:\t" + stationeryBrandName + "\nType:\t\t" + stationeryType + "\nManufacturer:\t"
+				+ stationeryManufacturer + "\nBarcode-13:\t" + stationeryBarcode13;
+	}
 }
