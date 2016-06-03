@@ -1,7 +1,14 @@
 package prg1203.assignment;
 
-public class Stationery extends Item {
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+public class Stationery extends Item implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1180183412516342817L;
 	private String stationeryBrandName;
 	private String stationeryType;
 	private String stationeryManufacturer;
@@ -10,8 +17,8 @@ public class Stationery extends Item {
 	public Stationery() {
 	}
 
-	public Stationery(String itemCode, int itemQuantity, double itemCost,
-			double itemPrice, boolean itemStatus, int itemDiscount,
+	public Stationery(String itemCode, int itemQuantity, BigDecimal itemCost,
+			BigDecimal itemPrice, boolean itemStatus, int itemDiscount,
 			String stationeryBrandName, String stationeryType, String stationeryManufacturer,
 			String stationeryBarcode13) {
 		super(itemCode, itemQuantity, itemCost, itemPrice, itemStatus, itemDiscount);
@@ -55,7 +62,10 @@ public class Stationery extends Item {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "\nBrand Name:\t" + stationeryBrandName + "\nType:\t\t" + stationeryType + "\nManufacturer:\t"
-				+ stationeryManufacturer + "\nBarcode-13:\t" + stationeryBarcode13;
+		return super.toString() +
+				"\nBrand Name:\t" + stationeryBrandName +
+				"\nType:\t\t" + stationeryType +
+				"\nManufacturer:\t" + stationeryManufacturer +
+				"\nBarcode-13:\t" + stationeryBarcode13;
 	}
 }

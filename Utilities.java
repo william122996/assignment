@@ -1,17 +1,56 @@
 package prg1203.assignment;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Utilities {
 	
-	// Random String Generator
-	public final class SessionIdentiferGenerator {
-		private SecureRandom random = new SecureRandom();
-		
-		public String nextSessionId() {
-			return new BigInteger(130, random).toString(32);
-		}
-	}
+    List<List<String>> lines = new ArrayList<>();
+    List<Integer> maxLengths = new ArrayList<>();
+    int numColumns = -1;
 
+    public Utilities printLine(String... line) {
+
+        if (numColumns == -1){
+            numColumns = line.length;
+            for(int i = 0; i < numColumns; i++) {
+                maxLengths.add(0);
+            }
+        }
+
+        if (numColumns != line.length) {
+            throw new IllegalArgumentException();
+        }
+
+        for(int i = 0; i < numColumns; i++) {
+            maxLengths.set(  i, Math.max( maxLengths.get(i), line[i].length() )  );
+        }
+
+        lines.add( Arrays.asList(line) );
+
+        return this;
+    }
+
+    public void print(){
+        System.out.println( toString() );
+    }
+
+    public String toString(){
+        String result = "";
+        for(List<String> line : lines) {
+            for(int i = 0; i < numColumns; i++) {
+                result += pad( line.get(i), maxLengths.get(i) + 1 );                
+            }
+            result += System.lineSeparator();
+        }
+        return result;
+    }
+
+    private String pad(String word, int newLength){
+        while (word.length() < newLength) {
+            word += " ";            
+        }       
+        return word;
+    }
 }

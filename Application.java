@@ -1,5 +1,11 @@
 package prg1203.assignment;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,36 +23,40 @@ Sunway University, Malaysia
 
 public class Application {
 
-	public static void main(String[] args) {
-		
-		// ArrayList of Item objects in var items
-		ArrayList<Item> items = new ArrayList<Item>();
-		
-		// TODO Add read line from text file
-		// Add object into Item object ArrayList in var items
-		items.add(new Book("B001", 10, 19.9, 49.9, true, 15,
-						"Harry Potter", "Yoloswaggerino", "New York Storybook", "ABC123", "ABC12345", "Fantasy"));
-		items.add(new Book("B002", 20, 36.9, 69.9, true, 20,
-						"Lord of the Ring", "Martin Lurther King", "USA Book", "ABC123", "ABC12345", "Fantasy"));
-		items.add(new CD("C001", 10, 19.9, 49.9, true, 15,
-						"True", "Blah blah blah", "Avicii", 3, new String[]{"Track A", "Track B", "Track C"}));
-		items.add(new Stationery("S001", 10, 10, 20, true, 0,
-						"Faber Castell", "Mechanical Pen", "FB China", "ABC12345"));
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		
         String fileName = new String("");
-        
-        //If console argument exists it is the default file name until
-        //changed.
+                
+        //If console argument exists it is the default file name until changed.
         if (args.length != 0) {
         	fileName = args[0];
         } else {
-        	fileName = "none";
+        	fileName = "popular.db";
         }
         
+        ArrayList<Item> items = new ArrayList<Item>();
+        readItem(fileName, items);
 		runApp(fileName, items);
 	}
+
 	
-	public static void runApp(String fileName, ArrayList<Item> items) {
+	public static void runApp(String fileName, ArrayList<Item> items) throws ClassNotFoundException, IOException {	
+        
+		// ArrayList of Item objects in var items
+		
+		
+		// TODO Add read line from text file
+		// Add object into Item object ArrayList in var items
+//		items.add(new Book("B001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
+//						"Harry Potter", "Yoloswaggerino", "New York Storybook", "ABC123", "ABC12345", "Fantasy"));
+//		items.add(new Book("B002", 20, new BigDecimal("36.9"), new BigDecimal("69.9"), true, 20,
+//						"Lord of the Ring", "Martin Lurther King", "USA Book", "ABC123", "ABC12345", "Fantasy"));
+//		items.add(new CD("C001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
+//						"True", "Blah blah blah", "Avicii", 3, new String[]{"Track A", "Track B", "Track C"}));
+//		items.add(new Stationery("S001", 10, new BigDecimal("10"), new BigDecimal("20"), true, 0,
+//						"Faber Castell", "Mechanical Pen", "FB China", "ABC12345"));
+		
+        
 		
 		boolean keepAlive = true; // Condition to keep app running
 		boolean dbExists = true; // Check if database exists
@@ -56,21 +66,21 @@ public class Application {
 			userChoice = showMenu(fileName, dbExists);
 			
 			switch(userChoice) {
-				// Add an item
+				
+				// Add item
 				case 1:
 				{
-					System.out.println("");
-					
+					System.out.println(" What is the item type?");
 					break;
 				}
 				
-				// Edit an item
+				// Edit item
 				case 2:
 				{
 					break;
 				}
 				
-				// Delete an item
+				// Delete item
 				case 3:
 				{
 					break;
@@ -87,34 +97,44 @@ public class Application {
 				{
 					// Display all Item in ArrayList var items
 					for (Item x: items) {
-						System.out.println("[Item #" + items.indexOf(x) + "]");
+						System.out.println(" [Item #" + items.indexOf(x) + "]");
 						System.out.println(x.toString() + "\n");
 					}
+					System.out.println(" Press enter to return...");
+					System.in.read();
 					break;
 				}
 				
-				// Search for an item
+				// Search item
 				case 6:
 				{
 					break;
 				}
 				
-				// Import database
+				// Save database
 				case 7:
 				{
 					break;
 				}
 				
-				// Export database
+				// Load database
 				case 8:
 				{
+					Scanner fileNameScanner = new Scanner(System.in);
+					System.out.println(" Please input database filename: ");
+					String fileNameN = fileNameScanner.nextLine();
+					File fileNameNew = new File(fileNameN);
+					if (!fileNameNew.exists()) {
+						fileNameNew.createNewFile();
+					}
+					readItem(fileNameN, items);
 					break;
 				}
 				
 				// Exit
-				case 9:
+				case 0:
 				{
-					System.out.println("Goodbye!");
+					System.out.println(" Goodbye!");
 					keepAlive = false;
 					break;
 				}
@@ -122,48 +142,65 @@ public class Application {
 				// Fail-safe
 				default:
 				{
-					System.out.println("You are not supposed to see this.");
+					System.out.println(" You are not supposed to see this.");
 				}
 					
 			}
 		}
 	}
 	
+	
+	// Main menu
 	public static int showMenu(String fileName, boolean dbExists) throws NumberFormatException {
 		
-		int intChoice  = 0;
+		int intChoice  = -1;
 		String strChoice = "";
 		Scanner userInput = new Scanner(System.in);
 		
-		System.out.println("Popular Bookstore Inventory Management");
-		System.out.println("Select an option:");
-		System.out.println("1) Add an item");
-		System.out.println("2) Edit an item");
-		System.out.println("3) Delete an item");
-		System.out.println("4) Update item quantity");
-		System.out.println("5) List all item");
-		System.out.println("6) Search");
-		if (dbExists) {
-			System.out.println("7) Import database");
-			System.out.println("8) Export database");
-		}
-		System.out.println("9) Exit\n");
+		System.out.println("  _   _   _               _     _   _   _      __ ___ _   _   _ ");
+		System.out.println(" |_) / \\ |_) | | |   /\\  |_)   |_) / \\ / \\ |/ (_   | / \\ |_) |_ ");
+		System.out.println(" |   \\_/ |   |_| |_ /--\\ | \\   |_) \\_/ \\_/ |\\ __)  | \\_/ | \\ |_   Inventory Management Software\n");
+		System.out.println(" Current Database: " + fileName + "\n");
+		System.out.println(" Main Menu");
 		
-		while(intChoice < 1 || intChoice > 9) {
-			System.out.println("Please select a valid option: ");
+        new Utilities()
+        .printLine(" 1) Add an item", "6) Search item")
+        .printLine(" 2) Modify item", "7) Save database")
+        .printLine(" 3) Delete item", "8) Load database")
+        .printLine(" 4) Update item quantity", "-)")
+        .printLine(" 5) List all items", "0) Exit")
+        .print();
+		
+		while(intChoice < 0 || intChoice > 8) {
+			System.out.println(" Please select a valid option: ");
 			strChoice = userInput.next();
 			try {
 				intChoice = Integer.parseInt(strChoice);
 			} catch (NumberFormatException e) {
 				intChoice = -1;
 			} finally {
-				// TODO Close scanner resource, or not
-				userInput.close();
-				//System.out.println("Final can execute code regardless!");
+				// Code here can run regardless
 			}
 		}
 		
 		return intChoice;
 	}
+	
+	
+    // Read object from file
+	public static void readItem(String fileName, ArrayList<Item> items) throws IOException, ClassNotFoundException{   
+		items.clear(); // Remove existing objects in ArrayList items
+        FileInputStream fis = new FileInputStream(fileName);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        items = (ArrayList<Item>) ois.readObject();
+        ois.close();
+	}
 
+    // Save object into file
+	public void saveItem(String fileName, ArrayList<Item> items) throws IOException {
+        FileOutputStream fos = new FileOutputStream(fileName);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(items);
+        oos.close();
+	}
 }

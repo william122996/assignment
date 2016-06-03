@@ -1,9 +1,15 @@
 package prg1203.assignment;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Arrays;
 
-public class CD extends Item {
+public class CD extends Item implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -422802833419058083L;
 	private String cdAlbumTitle;
 	private String cdDescription;
 	private String cdDistributor;
@@ -14,8 +20,8 @@ public class CD extends Item {
 	}
 	
 	// Constructor 
-	public CD(String itemCode, int itemQuantity, double itemCost,
-			double itemPrice, boolean itemStatus, int itemDiscount,
+	public CD(String itemCode, int itemQuantity, BigDecimal itemCost,
+			BigDecimal itemPrice, boolean itemStatus, int itemDiscount,
 			String cdAlbumTitle, String cdDescription,
 			String cdDistributor, int cdNumberOfTrack, String[] cdTrackListing) {
 		super(itemCode, itemQuantity, itemCost, itemPrice, itemStatus, itemDiscount);
@@ -68,9 +74,12 @@ public class CD extends Item {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nAlbum Title:\t" + cdAlbumTitle + "\nDescription:\t" + cdDescription + "\nDistributor:\t"
-				+ cdDistributor + "\nNo. of Track:\t" + cdNumberOfTrack + "\nTrack Listing:\t"
-				+ Arrays.toString(cdTrackListing);
+		return super.toString() +
+				"\nAlbum Title:\t" + cdAlbumTitle +
+				"\nDescription:\t" + cdDescription +
+				"\nDistributor:\t" + cdDistributor +
+				"\nNo. of Track:\t" + cdNumberOfTrack +
+				"\nTrack Listing:\t" + Arrays.toString(cdTrackListing);
 	}
 	
 }

@@ -1,7 +1,14 @@
 package prg1203.assignment;
 
-public class Book extends Item {
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+public class Book extends Item implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6257639711549272203L;
 	private String bookTitle;
 	private String bookAuthor;
 	private String bookPublisher;
@@ -13,8 +20,8 @@ public class Book extends Item {
 	}
 	
 	// Constructor
-	public Book(String itemCode, int itemQuantity, double itemCost, 
-			double itemPrice, boolean itemStatus, int itemDiscount,
+	public Book(String itemCode, int itemQuantity, BigDecimal itemCost, 
+			BigDecimal itemPrice, boolean itemStatus, int itemDiscount,
 			String bookTitle, String bookAuthor, String bookPublisher,
 			String bookISBN10, String bookISBN13, String bookFiction) {
 		super(itemCode, itemQuantity, itemCost, itemPrice, itemStatus, itemDiscount);
@@ -76,8 +83,13 @@ public class Book extends Item {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nBook Title:\t" + bookTitle + "\nBook Author:\t" + bookAuthor + "\nBook Publisher:\t"
-				+ bookPublisher + "\nISBN-10:\t" + bookISBN10 + "\nISBN-13:\t" + bookISBN13 + "\nFiction:\t" + bookFiction;
+		return super.toString() +
+				"\nBook Title:\t" + bookTitle +
+				"\nBook Author:\t" + bookAuthor +
+				"\nBook Publisher:\t" + bookPublisher +
+				"\nISBN-10:\t" + bookISBN10 +
+				"\nISBN-13:\t" + bookISBN13 +
+				"\nFiction:\t" + bookFiction;
 	}
 
 }
