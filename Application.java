@@ -38,12 +38,6 @@ public class Application {
 	public static void runApp(String fileName) throws ClassNotFoundException, IOException {	
         
 		ArrayList<Item> items = new ArrayList<Item>();
-		
-		try {
-			items = Utilities.deserialize(fileName);
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
-		}
 			
 		items.add(new Book("B001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
 						"Harry Potter", "Yoloswaggerino", "New York Storybook", "ABC123", "ABC12345", "Fantasy"));
@@ -146,20 +140,18 @@ public class Application {
 				// Load database
 				case 8:
 				{
-					try (Scanner scLoadDB = new Scanner(System.in)) {
-						System.out.println(" Please input database filename: \n");
-						fileName = scLoadDB.nextLine();
-						File f = new File(fileName);
-						if (!f.exists()) {
-							f.createNewFile();
-						}
-						
-						try {
-							items.clear();
-							items = Utilities.deserialize(fileName);
-						} catch (ClassNotFoundException | IOException e) {
-							e.printStackTrace();
-						}
+					System.out.println(" Please input database filename: \n");
+					fileName = sc.nextLine();
+					File f = new File(fileName);
+					if (!f.exists()) {
+						f.createNewFile();
+					}
+					
+					try {
+						items.clear();
+						items = Utilities.deserialize(fileName);
+					} catch (ClassNotFoundException | IOException e) {
+						e.printStackTrace();
 					}
 					break;
 				}

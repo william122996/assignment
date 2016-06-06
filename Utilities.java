@@ -15,30 +15,45 @@ public class Utilities {
 	// Load object
 	public static ArrayList<Item> deserialize(String fileName) throws IOException, ClassNotFoundException {
 		
-		File file = new File(fileName);
-		System.out.println(file.getAbsolutePath());
-		do {
-			file.createNewFile();
-		} while (!file.exists());
-		FileInputStream fis = new FileInputStream(fileName);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		//System.out.println("DeSerialization process has started, displaying objects...");
+//		File file = new File(fileName);
+//		System.out.println(file.getAbsolutePath());
+//		while (!file.exists())
+//			file.createNewFile();
+
+		ArrayList<Item> items = new ArrayList<Item>();
 		
-		ArrayList<Item> items = (ArrayList<Item>) ois.readObject();
-		//System.out.println(items);
-		ois.close();
-		//System.out.println("Object DeSerialization completed.");
+		FileInputStream fis = null;
+	    ObjectInputStream ois = null;
+		
+		try {
+			System.out.println("DeSerialization process has started, displaying objects...");
+			items.add((Item) ois.readObject());
+			System.out.println(items);
+			System.out.println("Object DeSerialization completed.");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (ois != null)
+				ois.close();
+		}
 		return items;
 	}
 	
 	// Save object
-	public static void serialize(Object obj, String fileName) throws IOException {
-		FileOutputStream fos = new FileOutputStream(fileName);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		//System.out.println("Serialization process has started, displaying objects...");
-		oos.writeObject(obj);
-		fos.close();
-		//System.out.println("Object serialization completed.");
+	public static void serialize(ArrayList<Item> items, String fileName) throws IOException {
+		FileOutputStream fos = null;
+	    ObjectOutputStream oos = null;
+	    try {
+	    	fos = new FileOutputStream(fileName);
+	    	oos = new ObjectOutputStream(fos);
+	    	System.out.println("Serialization process has started, displaying objects...");
+	    	oos.writeObject(items);
+	    } catch (Exception ex) {
+	    	ex.printStackTrace();
+	    } finally {
+	    	fos.close();
+	    	System.out.println("Object serialization completed.");
+	    }
 	}
 	
 	// Column printer
