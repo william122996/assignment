@@ -1,11 +1,8 @@
 package prg1203.assignment;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,33 +31,33 @@ public class Application {
         	fileName = "popular.db";
         }
         
-        ArrayList<Item> items = new ArrayList<Item>();
-        readItem(fileName, items);
-		runApp(fileName, items);
+		runApp(fileName);
 	}
 
 	
-	public static void runApp(String fileName, ArrayList<Item> items) throws ClassNotFoundException, IOException {	
+	public static void runApp(String fileName) throws ClassNotFoundException, IOException {	
         
-		// ArrayList of Item objects in var items
+		ArrayList<Item> items = new ArrayList<Item>();
 		
-		
-		// TODO Add read line from text file
-		// Add object into Item object ArrayList in var items
-//		items.add(new Book("B001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
-//						"Harry Potter", "Yoloswaggerino", "New York Storybook", "ABC123", "ABC12345", "Fantasy"));
-//		items.add(new Book("B002", 20, new BigDecimal("36.9"), new BigDecimal("69.9"), true, 20,
-//						"Lord of the Ring", "Martin Lurther King", "USA Book", "ABC123", "ABC12345", "Fantasy"));
-//		items.add(new CD("C001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
-//						"True", "Blah blah blah", "Avicii", 3, new String[]{"Track A", "Track B", "Track C"}));
-//		items.add(new Stationery("S001", 10, new BigDecimal("10"), new BigDecimal("20"), true, 0,
-//						"Faber Castell", "Mechanical Pen", "FB China", "ABC12345"));
-		
-        
+		try {
+			items = Utilities.deserialize(fileName);
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+			
+		items.add(new Book("B001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
+						"Harry Potter", "Yoloswaggerino", "New York Storybook", "ABC123", "ABC12345", "Fantasy"));
+		items.add(new Book("B002", 20, new BigDecimal("36.9"), new BigDecimal("69.9"), true, 20,
+						"Lord of the Ring", "Martin Lurther King", "USA Book", "ABC123", "ABC12345", "Fantasy"));
+		items.add(new CD("C001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
+						"True", "Blah blah blah", "Avicii", 3, new String[]{"Track A", "Track B", "Track C"}));
+		items.add(new Stationery("S001", 10, new BigDecimal("10"), new BigDecimal("20"), true, 0,
+						"Faber Castell", "Mechanical Pen", "FB China", "ABC12345"));
 		
 		boolean keepAlive = true; // Condition to keep app running
 		boolean dbExists = true; // Check if database exists
 		int userChoice = 0; // User choice from menu
+		Scanner sc = new Scanner(System.in);
 		
 		while(keepAlive) {
 			userChoice = showMenu(fileName, dbExists);
@@ -70,7 +67,30 @@ public class Application {
 				// Add item
 				case 1:
 				{
-					System.out.println(" What is the item type?");
+				System.out.println(" What is the item type?");
+				new Utilities()
+				.printLine(" 1) Book","3) Stationery")
+				.printLine(" 2) CD","4) Cancel")
+				.print();
+					switch(sc.nextInt()) {
+						case 1:
+						{
+							items.add(new Book());
+							break;
+						}
+						case 2:
+						{
+							items.add(new CD());
+							break;
+						}
+						case 3:
+						{
+							items.add(new Stationery());
+							break;
+						}
+					}
+					Utilities.serialize(items, fileName);
+					System.out.println(" Item #" + items.size() + " added successfully!");
 					break;
 				}
 				
@@ -97,7 +117,7 @@ public class Application {
 				{
 					// Display all Item in ArrayList var items
 					for (Item x: items) {
-						System.out.println(" [Item #" + items.indexOf(x) + "]");
+						System.out.println("\t[Item #" + items.indexOf(x) + "]");
 						System.out.println(x.toString() + "\n");
 					}
 					System.out.println(" Press enter to return...");
@@ -114,20 +134,33 @@ public class Application {
 				// Save database
 				case 7:
 				{
+					try {
+						Utilities.serialize(items, fileName);
+						System.out.println(" Database serialized successfully! " + items.size() + " items saved.");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}	
 					break;
 				}
 				
 				// Load database
 				case 8:
 				{
-					Scanner fileNameScanner = new Scanner(System.in);
-					System.out.println(" Please input database filename: ");
-					String fileNameN = fileNameScanner.nextLine();
-					File fileNameNew = new File(fileNameN);
-					if (!fileNameNew.exists()) {
-						fileNameNew.createNewFile();
+					try (Scanner scLoadDB = new Scanner(System.in)) {
+						System.out.println(" Please input database filename: \n");
+						fileName = scLoadDB.nextLine();
+						File f = new File(fileName);
+						if (!f.exists()) {
+							f.createNewFile();
+						}
+						
+						try {
+							items.clear();
+							items = Utilities.deserialize(fileName);
+						} catch (ClassNotFoundException | IOException e) {
+							e.printStackTrace();
+						}
 					}
-					readItem(fileNameN, items);
 					break;
 				}
 				
@@ -155,7 +188,7 @@ public class Application {
 		
 		int intChoice  = -1;
 		String strChoice = "";
-		Scanner userInput = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("  _   _   _               _     _   _   _      __ ___ _   _   _ ");
 		System.out.println(" |_) / \\ |_) | | |   /\\  |_)   |_) / \\ / \\ |/ (_   | / \\ |_) |_ ");
@@ -172,8 +205,8 @@ public class Application {
         .print();
 		
 		while(intChoice < 0 || intChoice > 8) {
-			System.out.println(" Please select a valid option: ");
-			strChoice = userInput.next();
+			System.out.println(" Please select a valid option: \n");
+			strChoice = sc.next();
 			try {
 				intChoice = Integer.parseInt(strChoice);
 			} catch (NumberFormatException e) {
@@ -185,22 +218,5 @@ public class Application {
 		
 		return intChoice;
 	}
-	
-	
-    // Read object from file
-	public static void readItem(String fileName, ArrayList<Item> items) throws IOException, ClassNotFoundException{   
-		items.clear(); // Remove existing objects in ArrayList items
-        FileInputStream fis = new FileInputStream(fileName);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        items = (ArrayList<Item>) ois.readObject();
-        ois.close();
-	}
 
-    // Save object into file
-	public void saveItem(String fileName, ArrayList<Item> items) throws IOException {
-        FileOutputStream fos = new FileOutputStream(fileName);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(items);
-        oos.close();
-	}
 }

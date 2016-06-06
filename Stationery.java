@@ -1,20 +1,19 @@
 package prg1203.assignment;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Scanner;
 
-public class Stationery extends Item implements Serializable {
+public class Stationery extends Item {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1180183412516342817L;
+	private static final long serialVersionUID = 1559479991529913571L;
 	private String stationeryBrandName;
 	private String stationeryType;
 	private String stationeryManufacturer;
 	private String stationeryBarcode13;
+	private Scanner sc = new Scanner(System.in);
 
 	public Stationery() {
+		addItem();
 	}
 
 	public Stationery(String itemCode, int itemQuantity, BigDecimal itemCost,
@@ -36,7 +35,7 @@ public class Stationery extends Item implements Serializable {
 		this.stationeryBrandName = stationeryBrandName;
 	}
 	
-	public String getStationeryType() {
+	public String getStationeryType() {	
 		return this.stationeryType;
 	}
 	
@@ -60,12 +59,24 @@ public class Stationery extends Item implements Serializable {
 		this.stationeryBarcode13 = stationeryBarcode13;
 	}
 	
+	public void addItem() {
+		super.addItem();
+		System.out.println(" Brand Name:");
+		this.stationeryBrandName = sc.nextLine();
+		System.out.println(" Type:");
+		this.stationeryType = sc.nextLine();
+		System.out.println(" Manufacturer:");
+		this.stationeryManufacturer = sc.nextLine();
+		System.out.println(" Barcode-13:");
+		this.stationeryBarcode13 = sc.nextLine();
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() +
-				"\nBrand Name:\t" + stationeryBrandName +
-				"\nType:\t\t" + stationeryType +
-				"\nManufacturer:\t" + stationeryManufacturer +
-				"\nBarcode-13:\t" + stationeryBarcode13;
+				"\n\tBrand Name:\t" + stationeryBrandName +
+				"\n\tType:\t\t" + stationeryType +
+				"\n\tManufacturer:\t" + stationeryManufacturer +
+				"\n\tBarcode-13:\t" + stationeryBarcode13;
 	}
 }

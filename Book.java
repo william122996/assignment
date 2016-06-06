@@ -1,22 +1,21 @@
 package prg1203.assignment;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Scanner;
 
-public class Book extends Item implements Serializable {
+public class Book extends Item {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6257639711549272203L;
+	private static final long serialVersionUID = -6381168188394268908L;
 	private String bookTitle;
 	private String bookAuthor;
 	private String bookPublisher;
 	private String bookISBN10;
 	private String bookISBN13;
 	private String bookFiction;
+	private Scanner sc = new Scanner(System.in);
 	
 	public Book() {
+		addItem();
 	}
 	
 	// Constructor
@@ -80,16 +79,33 @@ public class Book extends Item implements Serializable {
 	public void setBookFiction(String bookFiction) {
 		this.bookFiction = bookFiction;
 	}
-
+	
+	@Override
+	public void addItem() {
+		super.addItem();
+		System.out.println(" Book Title (STRING)");
+		this.bookTitle = sc.nextLine();
+		System.out.println(" Book Author (STRING)");
+		this.bookAuthor = sc.nextLine();
+		System.out.println(" Book Publisher (STRING)");
+		this.bookPublisher = sc.nextLine();
+		System.out.println(" Book ISBN-10 (STRING)");
+		this.bookISBN10 = sc.nextLine();
+		System.out.println(" Book ISBN-13 (STRING)");
+		this.bookISBN13 = sc.nextLine();
+		System.out.println(" Book Fiction (STRING)");
+		this.bookFiction = sc.nextLine();
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() +
-				"\nBook Title:\t" + bookTitle +
-				"\nBook Author:\t" + bookAuthor +
-				"\nBook Publisher:\t" + bookPublisher +
-				"\nISBN-10:\t" + bookISBN10 +
-				"\nISBN-13:\t" + bookISBN13 +
-				"\nFiction:\t" + bookFiction;
+				"\n\tBook Title:\t" + bookTitle +
+				"\n\tBook Author:\t" + bookAuthor +
+				"\n\tBook Publisher:\t" + bookPublisher +
+				"\n\tISBN-10:\t" + bookISBN10 +
+				"\n\tISBN-13:\t" + bookISBN13 +
+				"\n\tFiction:\t" + bookFiction;
 	}
 
 }
