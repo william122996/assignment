@@ -9,8 +9,10 @@ public class Stationery extends Item {
 	private String stationeryBrandName;
 	private String stationeryType;
 	private String stationeryManufacturer;
+	private String stationeryManufacturerCompany;
+	private String stationeryManufacturerAddress;
 	private String stationeryBarcode13;
-	private Scanner sc = new Scanner(System.in);
+	private transient Scanner sc = new Scanner(System.in);
 
 	public Stationery() {
 		addItem();
@@ -19,6 +21,7 @@ public class Stationery extends Item {
 	public Stationery(String itemCode, int itemQuantity, BigDecimal itemCost,
 			BigDecimal itemPrice, boolean itemStatus, int itemDiscount,
 			String stationeryBrandName, String stationeryType, String stationeryManufacturer,
+			String stationeryManufacturerCompany, String stationeryManufacturerAddress,
 			String stationeryBarcode13) {
 		super(itemCode, itemQuantity, itemCost, itemPrice, itemStatus, itemDiscount);
 		setStationeryBrandName(stationeryBrandName);
@@ -27,56 +30,79 @@ public class Stationery extends Item {
 		setStationeryBarcode13(stationeryBarcode13);
 	}
 	
-	public String getStationeryBrandName() {
+	private String getStationeryBrandName() {
 		return this.stationeryBrandName;
 	}
 	
-	public void setStationeryBrandName(String stationeryBrandName) {
+	private void setStationeryBrandName(String stationeryBrandName) {
 		this.stationeryBrandName = stationeryBrandName;
 	}
 	
-	public String getStationeryType() {	
+	private String getStationeryType() {	
 		return this.stationeryType;
 	}
 	
-	public void setStationeryType(String stationeryType) {
+	private void setStationeryType(String stationeryType) {
 		this.stationeryType = stationeryType;
 	}
 	
-	public String getStationeryManufacturer() {
+	private String getStationeryManufacturer() {
 		return this.stationeryManufacturer;
 	}
 	
-	public void setStationeryManufacturer(String stationeryManufacturer) {
+	private void setStationeryManufacturer(String stationeryManufacturer) {
 		this.stationeryManufacturer = stationeryManufacturer;
 	}
 	
-	public String getStationeryBarcode13() {
+	private String getStationeryManufacturerCompany() {
+		return this.stationeryManufacturerCompany;
+	}
+	
+	private void setStationeryManufacturerCompany(String stationeryManufacturerCompany) {
+		this.stationeryManufacturerCompany = stationeryManufacturerCompany;
+	}
+	
+	private String getStationeryManufacturerAddress() {
+		return this.stationeryManufacturerAddress;
+	}
+	
+	private void setStationeryManufacturerAddress(String stationeryManufacturerAddress) {
+		this.stationeryManufacturerAddress = stationeryManufacturerAddress;
+	}
+	
+	private String getStationeryBarcode13() {
 		return this.stationeryBarcode13;
 	}
 	
-	public void setStationeryBarcode13(String stationeryBarcode13) {
+	private void setStationeryBarcode13(String stationeryBarcode13) {
 		this.stationeryBarcode13 = stationeryBarcode13;
 	}
 	
+	@Override
 	public void addItem() {
 		super.addItem();
-		System.out.println(" Brand Name:");
-		this.stationeryBrandName = sc.nextLine();
-		System.out.println(" Type:");
-		this.stationeryType = sc.nextLine();
-		System.out.println(" Manufacturer:");
-		this.stationeryManufacturer = sc.nextLine();
-		System.out.println(" Barcode-13:");
-		this.stationeryBarcode13 = sc.nextLine();
+		System.out.println("[Brand Name]");
+		setStationeryBrandName(sc.nextLine());
+		System.out.println("[Type]");
+		setStationeryType(sc.nextLine());
+		System.out.println("[Manufacturer]");
+		setStationeryManufacturer(sc.nextLine());
+		System.out.println("[Manufacturer Company]");
+		setStationeryManufacturerCompany(sc.nextLine());
+		System.out.println("[Manufacturer Address]");
+		setStationeryManufacturerAddress(sc.nextLine());
+		System.out.println("[Barcode-13]");
+		setStationeryBarcode13(sc.nextLine());
 	}
 	
 	@Override
 	public String toString() {
 		return super.toString() +
-				"\n\tBrand Name:\t" + stationeryBrandName +
-				"\n\tType:\t\t" + stationeryType +
-				"\n\tManufacturer:\t" + stationeryManufacturer +
-				"\n\tBarcode-13:\t" + stationeryBarcode13;
+				"\n[Stationery Brand Name]\t" + getStationeryBrandName() +
+				"\n[Stationery Type]\t" + getStationeryType() +
+				"\n[Stationery Manufacturer]\t" + getStationeryManufacturer() +
+				"\n[Stationery Manufacturer Company]\t" + getStationeryManufacturerCompany() +
+				"\n[Stationery Manufacturer Address]\t" + getStationeryManufacturerAddress() +
+				"\n[Stationery Barcode-13]\t" + getStationeryBarcode13();
 	}
 }

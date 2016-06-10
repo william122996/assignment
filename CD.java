@@ -10,9 +10,11 @@ public class CD extends Item {
 	private String cdAlbumTitle;
 	private String cdDescription;
 	private String cdDistributor;
+	private String cdDistributorCompany;
+	private String cdDistributorAddress;
 	private int cdNumberOfTrack;
 	private String[] cdTrackListing;
-	private Scanner sc = new Scanner(System.in);
+	private transient Scanner sc = new Scanner(System.in);
 	
 	public CD() {
 		addItem();
@@ -21,8 +23,9 @@ public class CD extends Item {
 	// Constructor 
 	public CD(String itemCode, int itemQuantity, BigDecimal itemCost,
 			BigDecimal itemPrice, boolean itemStatus, int itemDiscount,
-			String cdAlbumTitle, String cdDescription,
-			String cdDistributor, int cdNumberOfTrack, String[] cdTrackListing) {
+			String cdAlbumTitle, String cdDescription, String cdDistributor,
+			String cdDistributorCompany, String cdDistributorAddress, int cdNumberOfTrack,
+			String[] cdTrackListing) {
 		super(itemCode, itemQuantity, itemCost, itemPrice, itemStatus, itemDiscount);
 		setCDAlbumTitle(cdAlbumTitle);
 		setCDDescription(cdDescription);
@@ -31,71 +34,94 @@ public class CD extends Item {
 		setCDTrackListing(cdTrackListing);
 	}
 
-	public String getCDAlbumTitle() {
+	private String getCDAlbumTitle() {
 		return this.cdAlbumTitle;
 	}
 	
-	public void setCDAlbumTitle(String cdAlbumTitle) {
+	private void setCDAlbumTitle(String cdAlbumTitle) {
 		this.cdAlbumTitle = cdAlbumTitle;
 	}
 	
-	public String getCDDescription() {
+	private String getCDDescription() {
 		return this.cdDescription;
 	}
 	
-	public void setCDDescription(String cdDescription) {
+	private void setCDDescription(String cdDescription) {
 		this.cdDescription = cdDescription;
 	}
 	
-	public String getCDDistributor() {
+	private String getCDDistributor() {
 		return this.cdDistributor;
 	}
 	
-	public void setCDDistributor(String cdDistributor) {
+	private void setCDDistributor(String cdDistributor) {
 		this.cdDistributor = cdDistributor;
 	}
 	
-	public int getCDNumberOfTrack() {
+	private String getCDDistributorCompany() {
+		return this.cdDistributorCompany;
+	}
+	
+	private void setCDDistributorCompany(String cdDistributorCompany) {
+		this.cdDistributorCompany = cdDistributorCompany;
+	}
+	
+	private String getCDDistributorAddress() {
+		return this.cdDistributorAddress;
+	}
+	
+	private void setCDDistributorAddress(String cdDistributorAddress) {
+		this.cdDistributorAddress = cdDistributorAddress;
+	}
+	
+	private int getCDNumberOfTrack() {
 		return this.cdNumberOfTrack;
 	}
 	
-	public void setCDNumberOfTrack(int cdNumberOfTrack) {
+	private void setCDNumberOfTrack(int cdNumberOfTrack) {
 		this.cdNumberOfTrack = cdNumberOfTrack;
 	}
 	
-	public String[] getCDTrackListing() {
+	private String[] getCDTrackListing() {
 		return this.cdTrackListing;
 	}
 	
-	public void setCDTrackListing(String[] cdTrackListing) {
+	private void setCDTrackListing(String[] cdTrackListing) {
 		this.cdTrackListing = cdTrackListing;
 	}
 	
+	@Override
 	public void addItem() {
-	super.addItem();
-	System.out.println(" CD Album Title (STRING)");
-	this.cdAlbumTitle = sc.nextLine();
-	System.out.println(" CD Description (STRING)");
-	this.cdDescription = sc.nextLine();
-	System.out.println(" CD Distributor (STRING)");
-	this.cdDistributor = sc.nextLine();
-	System.out.println(" CD Number of Tracks (INTERGER)");
-	this.cdNumberOfTrack = sc.nextInt();
-	//String cdTrackListing[] = {};
-	for (int i=0; i < cdNumberOfTrack; i++) {
-		System.out.println(" CD Track Name #" + (i+1) + " (STRING)");
-		this.cdTrackListing[i] = sc.nextLine();
-	}
+		super.addItem();
+		System.out.println("[CD Album Title] (str)");
+		setCDAlbumTitle(sc.nextLine());
+		System.out.println("[CD Description] (str)");
+		setCDDescription(sc.nextLine());
+		System.out.println("[CD Distributor] (str)");
+		setCDDistributor(sc.nextLine());
+		System.out.println("[CD Distributor Company] (str)");
+		setCDDistributorCompany(sc.nextLine());
+		System.out.println("[CD Distributor Address] (str)");
+		setCDDistributorAddress(sc.nextLine());
+		System.out.println("[CD Number of Tracks] (int)");
+		setCDNumberOfTrack(sc.nextInt());
+		String s[] = {};
+		for (int i=0; i < getCDNumberOfTrack(); i++) {
+			System.out.println("[CD Track Name] #" + (i) + " (str)");
+			s[i] = sc.nextLine();
+		}
 	}
 
 	@Override
 	public String toString() {
 		return super.toString() +
-				"\n\tAlbum Title:\t" + cdAlbumTitle +
-				"\n\tDescription:\t" + cdDescription +
-				"\n\tDistributor:\t" + cdDistributor +
-				"\n\tNo. of Track:\t" + cdNumberOfTrack +
-				"\n\tTrack Listing:\t" + Arrays.toString(cdTrackListing);
+				"\n[CD Album Title]\t" + getCDAlbumTitle() +
+				"\n[CD Description]\t" + getCDDescription() +
+				"\n[CD Distributor]\t" + getCDDistributor() +
+				"\n[CD Distributor Company]\t" + getCDDistributorCompany() +
+				"\n[CD Distributor Address]\t" + getCDDistributorAddress() +
+				"\n[CD No. of Track]\t" + getCDNumberOfTrack() +
+				"\n[CD Track Listing]\t" + Arrays.toString(getCDTrackListing());
 	}
 	
 }

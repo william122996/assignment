@@ -2,6 +2,7 @@ package prg1203.assignment;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Item implements Serializable {
@@ -13,7 +14,7 @@ public class Item implements Serializable {
 	private BigDecimal itemPrice;
 	private boolean itemStatus; // False is unavailable
 	private int itemDiscount;
-	private Scanner sc = new Scanner(System.in);
+	private transient Scanner sc = new Scanner(System.in);
 	
 	// No-args constructor
 	public Item() {
@@ -30,77 +31,118 @@ public class Item implements Serializable {
 	}
 	
 	// General get and set
-	public String getItemCode() {
+	private String getItemCode() {
 		return this.itemCode;
 	}
 	
-	public void setItemCode(String itemCode) {
+	private void setItemCode(String itemCode) {
 		this.itemCode = itemCode;
 	}
 	
-	public int getItemQuantity() {
+	private int getItemQuantity() {
 		return this.itemQuantity;
 	}
 	
-	public void setItemQuantity(int itemQuantity) {
+	private void setItemQuantity(int itemQuantity) {
 		this.itemQuantity = itemQuantity;
 	}
 	
-	public BigDecimal getItemCost() {
+	private BigDecimal getItemCost() {
 		return this.itemCost;
 	}
 	
-	public void setItemCost(BigDecimal itemCost) {
+	private void setItemCost(BigDecimal itemCost) {
 		this.itemCost = itemCost;
 	}
 	
-	public BigDecimal getItemPrice() {
+	private BigDecimal getItemPrice() {
 		return this.itemPrice;
 	}
 	
-	public void setItemPrice(BigDecimal itemPrice) {
+	private void setItemPrice(BigDecimal itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 	
-	public boolean getItemStatus() {
+	private boolean getItemStatus() {
 		return this.itemStatus;
 	}
 	
-	public void setItemStatus(boolean itemStatus) {
+	private void setItemStatus(boolean itemStatus) {
 		this.itemStatus = itemStatus;
 	}
 	
-	public int getItemDiscount() {
+	private int getItemDiscount() {
 		return this.itemDiscount;
 	}
 	
-	public void setItemDiscount(int itemDiscount) {
+	private void setItemDiscount(int itemDiscount) {
 		this.itemDiscount = itemDiscount;
 	}
 	
 	public void addItem() {
-		System.out.println(" Item Code (STRING)");
-		this.itemCode = sc.nextLine();
-		System.out.println(" Item Quantity (INTEGER)");
-		this.itemQuantity = sc.nextInt();
-		System.out.println(" Item Cost (DECIMAL)");
-		this.itemCost = sc.nextBigDecimal();
-		System.out.println(" Item Price (DECIMAL)");
-		this.itemPrice = sc.nextBigDecimal();
-		System.out.println(" Item Status (TRUE OR FALSE)");
-		this.itemStatus = sc.nextBoolean();
-		System.out.println(" Item Discount % (INTEGER)");
-		this.itemDiscount = sc.nextInt();
+		System.out.println("[Item Code] (str)");
+		setItemCode(sc.nextLine());
+		System.out.println("[Item Quantity] (int)");
+		setItemQuantity(sc.nextInt());
+		System.out.println("[Item Cost] (dec)");
+		setItemCost(sc.nextBigDecimal());
+		System.out.println("[Item Price] (dec)");
+		setItemPrice(sc.nextBigDecimal());
+		System.out.println("[Item Status] (boo)");
+		setItemStatus(sc.nextBoolean());
+		System.out.println("[Item Discount] % (int)");
+		setItemDiscount(sc.nextInt());
+	}
+	
+	public void editItem() {
+//		String s;
+//		int i;
+//		boolean b;
+		System.out.println("Editing item...");
+		System.out.println(this.toString());
+		System.out.println("[Item Quantity] (int)");
+		setItemQuantity(sc.nextInt());
+		System.out.println("[Item Cost] (dec)");
+		setItemCost(sc.nextBigDecimal());
+		System.out.println("[Item Price] (dec)");
+		setItemPrice(sc.nextBigDecimal());
+		System.out.println("[Item Status] (boo)");
+		setItemStatus(sc.nextBoolean());
+		System.out.println("[Item Discount] % (int)");
+		setItemDiscount(sc.nextInt());
+	}
+	
+	public void updateItemQuantity(int i) {
+		setItemQuantity(i);
+	}
+	
+//	public void updateItemQuantity(ArrayList<Item> items, int amount) {
+//		System.out.println("Search Query [Item Code]:");
+//		Item result = Item.searchItem(items, sc.nextLine());
+//		if (result != null) {
+//			int i = items.indexOf(result);
+//		}
+//	}
+	
+	public static Item searchItem(ArrayList<Item> items, String query) {
+		if (items == null)
+			throw new IllegalArgumentException("Error occured! Database is empty.\n");
+		for (Item x: items) {
+			if (x.getItemCode().equalsIgnoreCase(query)) {
+				return x;
+			}
+		}
+		return null;
 	}
 	
 	@Override
 	public String toString() {
-		return "\tItem Code:\t" + itemCode + 
-				"\n\tItem Quantity:\t" + itemQuantity + 
-				"\n\tItem Cost:\t$" + itemCost + 
-				"\n\tItem Price:\t$" + itemPrice +
-				"\n\tItem Status:\t" + itemStatus +
-				"\n\tItem Discount:\t" + itemDiscount + "%";
+		return "\n[Item Code]:\t" + getItemCode() + 
+				"\n[Item Quantity]:\t" + getItemQuantity() + 
+				"\n[Item Cost]:\t$" + getItemCost() + 
+				"\n[Item Price]:\t$" + getItemPrice() +
+				"\n[Item Status]:\t" + getItemStatus() +
+				"\n[Item Discount]:\t" + getItemDiscount() + "%";
 	}
 	
 }

@@ -6,208 +6,247 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/*
-PRG1203 Coursework April 2016
-Object-oriented Programming Fundamentals (PRG1203)
-Faculty of Science and Technology
-Sunway University, Malaysia
-
-1) TAN HAOLUN		15073141
-2) WILLIAM			14043061
-3) ONG HUEY WEN		14040844
-4) WONG KAH SIAK	15056013
-*/
+// ===== PRG1203 OBJECT-ORIENTED PROGRAMMING FUNDAMENTALS ======
+// = Group Assignment April 2016
+// = Faculty of Science and Technology
+// = Sunway University, Malaysia
+// =
+// ===== CONTRIBUTORS ==========================================
+// = 1) TAN HAOLUN		15073141
+// = 2) WILLIAM			14043061
+// = 3) ONG HUEY WEN	14040844
+// = 4) WONG KAH SIAK	15056013
+// =
+// ===== VERSION HISTORY =======================================
+// = Version 1.2
+// = * Added Java file I/O
+// = * Moved addItem() into their respective classes
+// = * Replaced double with BigDecimal for currency fields
+// = 
+// = Version 1.1
+// = * Added searchItem() method
+// = * Updated to be more modular, loop until user exits
+// =
+// = Version 1.0
+// = * Initial release
+// = 
+// =============================================================
 
 public class Application {
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	// Main method
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		
-        String fileName = new String("");
-                
-        //If console argument exists it is the default file name until changed.
-        if (args.length != 0) {
-        	fileName = args[0];
-        } else {
-        	fileName = "popular.db";
-        }
-        
-		runApp(fileName);
+		String fileName = new String("");
+		
+		if (args.length != 0) {
+			fileName = args[0];
+		} else {
+			fileName = "popular.db"; // Default database name, please place under project root
+		}
+		
+		runApplication(fileName);
 	}
-
 	
-	public static void runApp(String fileName) throws ClassNotFoundException, IOException {	
-        
-		ArrayList<Item> items = new ArrayList<Item>();
-			
-		items.add(new Book("B001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
-						"Harry Potter", "Yoloswaggerino", "New York Storybook", "ABC123", "ABC12345", "Fantasy"));
-		items.add(new Book("B002", 20, new BigDecimal("36.9"), new BigDecimal("69.9"), true, 20,
-						"Lord of the Ring", "Martin Lurther King", "USA Book", "ABC123", "ABC12345", "Fantasy"));
-		items.add(new CD("C001", 10, new BigDecimal("19.9"), new BigDecimal("49.9"), true, 15,
-						"True", "Blah blah blah", "Avicii", 3, new String[]{"Track A", "Track B", "Track C"}));
-		items.add(new Stationery("S001", 10, new BigDecimal("10"), new BigDecimal("20"), true, 0,
-						"Faber Castell", "Mechanical Pen", "FB China", "ABC12345"));
+	
+	// User program logic
+	public static void runApplication(String fileName) throws ClassNotFoundException, IOException {
 		
-		boolean keepAlive = true; // Condition to keep app running
-		boolean dbExists = true; // Check if database exists
-		int userChoice = 0; // User choice from menu
+		File file = new File(fileName);	
+		ArrayList<Item> items = new ArrayList<Item>();
+		
+		items = Utilities.deserialize(items, file, fileName);
+		
+		boolean keepAlive = true; // Keep console running
+		int userChoice = 0;
 		Scanner sc = new Scanner(System.in);
 		
 		while(keepAlive) {
-			userChoice = showMenu(fileName, dbExists);
+			userChoice = showMenu(fileName);
 			
 			switch(userChoice) {
-				
-				// Add item
+			case 1: // Add item
+			{
+				System.out.println("What is the item type?");
+				System.out.println("1) Book");
+				System.out.println("2) CD");
+				System.out.println("3) Stationery");
+				System.out.println("4) Cancel");
+				switch(sc.nextInt()) {
 				case 1:
 				{
-				System.out.println(" What is the item type?");
-				new Utilities()
-				.printLine(" 1) Book","3) Stationery")
-				.printLine(" 2) CD","4) Cancel")
-				.print();
-					switch(sc.nextInt()) {
-						case 1:
-						{
-							items.add(new Book());
-							break;
-						}
-						case 2:
-						{
-							items.add(new CD());
-							break;
-						}
-						case 3:
-						{
-							items.add(new Stationery());
-							break;
-						}
-					}
-					Utilities.serialize(items, fileName);
-					System.out.println(" Item #" + items.size() + " added successfully!");
+					items.add(new Book());
 					break;
 				}
-				
-				// Edit item
 				case 2:
 				{
+					items.add(new CD());
 					break;
 				}
-				
-				// Delete item
 				case 3:
 				{
+					items.add(new Stationery());
 					break;
 				}
-				
-				// Update item quantity
-				case 4:
-				{
-					break;
 				}
-				
-				// List all items
-				case 5:
-				{
-					// Display all Item in ArrayList var items
-					for (Item x: items) {
-						System.out.println("\t[Item #" + items.indexOf(x) + "]");
-						System.out.println(x.toString() + "\n");
+				Utilities.serialize(items, fileName);
+				System.out.println("Item saved successfully.");
+				break;
+			}
+			
+			case 2: // Edit item
+			{
+				System.out.println("Search Query [Item Code]: ");
+				Item result = Item.searchItem(items, sc.nextLine());
+				if (result != null) {
+					int i = items.indexOf(result);
+					System.out.println("Item found! Answer 'yes' to confirm edit.");
+					if (sc.nextLine().equalsIgnoreCase("yes")) {
+						items.get(i).editItem();
+						break;
 					}
-					System.out.println(" Press enter to return...");
-					System.in.read();
-					break;
 				}
-				
-				// Search item
-				case 6:
-				{
-					break;
-				}
-				
-				// Save database
-				case 7:
-				{
-					try {
-						Utilities.serialize(items, fileName);
-						System.out.println(" Database serialized successfully! " + items.size() + " items saved.");
-					} catch (IOException e) {
-						e.printStackTrace();
-					}	
-					break;
-				}
-				
-				// Load database
-				case 8:
-				{
-					System.out.println(" Please input database filename: \n");
-					fileName = sc.nextLine();
-					File f = new File(fileName);
-					if (!f.exists()) {
-						f.createNewFile();
+				System.out.println("Returning...");
+				break;
+			}
+			
+			case 3: // Delete item
+			{
+				System.out.println("Search Query [Item Code]: ");
+				Item result = Item.searchItem(items, sc.nextLine());
+				if (result != null) {
+					int i = items.indexOf(result);
+					System.out.println("Item found! Answer 'yes' to confirm delete.");
+					if (sc.nextLine().equalsIgnoreCase("yes")) {
+						items.remove(i);
+						System.out.println("Item removed successfully! Returning...");
+						break;
 					}
-					
-					try {
-						items.clear();
-						items = Utilities.deserialize(fileName);
-					} catch (ClassNotFoundException | IOException e) {
-						e.printStackTrace();
-					}
-					break;
 				}
-				
-				// Exit
-				case 0:
-				{
-					System.out.println(" Goodbye!");
+				System.out.println("Returning...");
+				break;
+			}
+			
+			case 4: // Update item quantity
+			{
+				System.out.println("Search Query [Item Code]: ");
+				Item result = Item.searchItem(items, sc.nextLine());
+				if (result != null) {
+					int i = items.indexOf(result);
+					System.out.println("Item found!");
+					System.out.println(items.get(i).toString());
+					System.out.println("Enter new amount: ");
+					int quantity = sc.nextInt();
+					if (quantity > 0) {
+						items.get(i).updateItemQuantity(quantity);
+						break;
+					} else {
+						System.out.println("Only natural integers are allowed!");
+					}
+				}
+				System.out.println("Returning...");
+				break;
+			}
+			
+			case 5: // List all items
+			{
+				System.out.println("Listing all items...");
+				for (Item x: items) {
+					System.out.println(x.toString() + "\n");
+				}
+				break;
+			}
+			
+			case 6: // Search item
+			{
+				System.out.println("Search Query [Item Code]: ");
+				Item result = Item.searchItem(items, sc.nextLine());
+				if (result != null) {
+					System.out.println("Item found!");
+					System.out.println(result.toString() + "\n");
+				} else {
+					System.out.println("Item not found! Returning...");
+				}
+				break;
+			}
+			
+			case 7: // Save database
+			{
+				try {
+					Utilities.serialize(items, fileName);
+					break;
+				} catch (ClassNotFoundException | IOException ex) {
+					ex.printStackTrace();
+				}
+				break;
+			}
+			
+			case 8: // Load database
+			{
+				try {
+					items = Utilities.deserialize(items, file, fileName);
+					break;
+				} catch (ClassNotFoundException | IOException ex) {
+					ex.printStackTrace();
+				}
+				break;
+			}
+
+			// Load dummy data, only if attached popular.db is unserializable
+			case 9: // Clear ArrayList and load dummy data
+			{
+				items.clear();
+				System.out.println("ArrayList is now empty.");
+				Utilities.loadDummy(items);
+				break;
+			}
+			
+			case 0: // Exit
+			{
+				System.out.println("Are you sure to exit program? Answer 'yes' to confirm.");
+				if (sc.nextLine().equalsIgnoreCase("yes")) {
+					System.out.println("Good bye!");
 					keepAlive = false;
-					break;
 				}
-				
-				// Fail-safe
-				default:
-				{
-					System.out.println(" You are not supposed to see this.");
-				}
-					
+				break;
+			}
+			
+			default: // Fail safe
+				System.out.println("You are not supposed to see this. Please contact system administrator.");
+				break;
 			}
 		}
 	}
 	
 	
-	// Main menu
-	public static int showMenu(String fileName, boolean dbExists) throws NumberFormatException {
+	// Main menu display
+	public static int showMenu(String fileName) throws NumberFormatException {
 		
 		int intChoice  = -1;
 		String strChoice = "";
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("  _   _   _               _     _   _   _      __ ___ _   _   _ ");
-		System.out.println(" |_) / \\ |_) | | |   /\\  |_)   |_) / \\ / \\ |/ (_   | / \\ |_) |_ ");
-		System.out.println(" |   \\_/ |   |_| |_ /--\\ | \\   |_) \\_/ \\_/ |\\ __)  | \\_/ | \\ |_   Inventory Management Software\n");
-		System.out.println(" Current Database: " + fileName + "\n");
-		System.out.println(" Main Menu");
+		System.out.println("Popular Bookshop Inventory Management System\n");
+		System.out.println("Main Menu:");
+		System.out.println("1) Add an item");
+		System.out.println("2) Modify item");
+		System.out.println("3) Delete item");
+		System.out.println("4) Update item quantity");
+		System.out.println("5) List all items");
+		System.out.println("6) Search item");
+		System.out.println("7) Save database");
+		System.out.println("8) Load database");
+		System.out.println("0) Exit\n");
 		
-        new Utilities()
-        .printLine(" 1) Add an item", "6) Search item")
-        .printLine(" 2) Modify item", "7) Save database")
-        .printLine(" 3) Delete item", "8) Load database")
-        .printLine(" 4) Update item quantity", "-)")
-        .printLine(" 5) List all items", "0) Exit")
-        .print();
-		
-		while(intChoice < 0 || intChoice > 8) {
-			System.out.println(" Please select a valid option: \n");
+		while(intChoice < 0 || intChoice > 9) {
+			System.out.println("User Input >");
 			strChoice = sc.next();
 			try {
 				intChoice = Integer.parseInt(strChoice);
 			} catch (NumberFormatException e) {
 				intChoice = -1;
-			} finally {
-				// Code here can run regardless
 			}
 		}
-		
 		return intChoice;
 	}
 
