@@ -98,11 +98,11 @@ public class Stationery extends Item {
 	@Override
 	public String toString() {
 		return super.toString() +
-				"\n[Stationery Brand Name]\t" + getStationeryBrandName() +
-				"\n[Stationery Type]\t" + getStationeryType() +
+				"\n[Stationery Brand Name]\t\t" + getStationeryBrandName() +
+				"\n[Stationery Type]\t\t" + getStationeryType() +
 				"\n[Stationery Manufacturer]\t" + getStationeryManufacturer() +
-				"\n[Stationery Manufacturer Company]\t" + getStationeryManufacturerCompany() +
-				"\n[Stationery Manufacturer Address]\t" + getStationeryManufacturerAddress() +
-				"\n[Stationery Barcode-13]\t" + getStationeryBarcode13();
+				"\n[Stationery Man. Company]\t" + getStationeryManufacturerCompany() +
+				"\n[Stationery Man. Address]\t" + getStationeryManufacturerAddress() +
+				"\n[Stationery Barcode-13]\t\t" + getStationeryBarcode13();
 	}
 }

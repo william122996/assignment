@@ -3,11 +3,6 @@
 Basic useful feature list:
 
  * Add, edit, remove items of different classes
- * Textfile-based database with samples
-
-Todo:
-
- * Implement textfile I/O
- * Implement menu looping
+ * Object-based database with 15 samples data
 
 :+1:

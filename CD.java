@@ -115,13 +115,13 @@ public class CD extends Item {
 	@Override
 	public String toString() {
 		return super.toString() +
-				"\n[CD Album Title]\t" + getCDAlbumTitle() +
-				"\n[CD Description]\t" + getCDDescription() +
-				"\n[CD Distributor]\t" + getCDDistributor() +
-				"\n[CD Distributor Company]\t" + getCDDistributorCompany() +
-				"\n[CD Distributor Address]\t" + getCDDistributorAddress() +
-				"\n[CD No. of Track]\t" + getCDNumberOfTrack() +
-				"\n[CD Track Listing]\t" + Arrays.toString(getCDTrackListing());
+				"\n[CD Album Title]\t\t" + getCDAlbumTitle() +
+				"\n[CD Description]\t\t" + getCDDescription() +
+				"\n[CD Distributor]\t\t" + getCDDistributor() +
+				"\n[CD Dist. Company]\t\t" + getCDDistributorCompany() +
+				"\n[CD Dist. Address]\t\t" + getCDDistributorAddress() +
+				"\n[CD No. of Track]\t\t" + getCDNumberOfTrack() +
+				"\n[CD Track Listing]\t\t" + Arrays.toString(getCDTrackListing());
 	}
 	
 }

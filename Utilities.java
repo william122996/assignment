@@ -12,21 +12,6 @@ import java.util.ArrayList;
 
 public class Utilities {
 	
-	// Check if exists
-//	public boolean equals(Object obj) {
-//		if (obj == null) {
-//			return false;
-//		}
-//		if (!Item.class.isAssignableFrom(obj.getClass())) {
-//			return false;
-//		}
-//		final Item other = (Item) obj;
-//		if ((this.getItemCode() == null) ? (other.getItemCode() != null) : !this.getItemCode().equals(other.getItemCode())) {
-//			return false;
-//		}
-//		return true;
-//	}
-	
 	public static boolean checkEmpty(File file) {
 		if (file.length() == 0)
 			return true;
@@ -42,16 +27,14 @@ public class Utilities {
 		if (!file.exists()) {
 			file.createNewFile();
 			System.out.println("New database file created. File name: " + fileName);
+			Utilities.loadDummy(items);
+			serialize(items, fileName);
 		}
 		
 		try {
 			fis = new FileInputStream(fileName);
 			ois = new ObjectInputStream(fis);
 			System.out.println("Reading database from \"" + file.getAbsolutePath() + "\"");
-			if (Utilities.checkEmpty(file)) {
-			}
-			Utilities.loadDummy(items);
-			serialize(items, fileName);
 			items = (ArrayList<Item>) ois.readObject();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -78,12 +61,13 @@ public class Utilities {
 			ex.printStackTrace();
 		} finally {
 			fos.close();
-			System.out.println("Database serialization completed! Returning...");
+			System.out.println("Database serialization completed! Returning...\n");
 		}
 	}
 	
 	// Extra dummy data block
 	public static void loadDummy(ArrayList<Item> items) {
+		System.out.println("Loading dummy data...");
 		items.add(new Book("B001", 200, new BigDecimal("36.9"), new BigDecimal("69.9"), true, 15,
 				"Harry Potter Ep. 1", "Yoloswaggerino", "New York Storybook", "NY Book Ltd.", "*this is an address*", "ABC100", "ABC123456", "Fantasy"));
 		items.add(new Book("B002", 200, new BigDecimal("36.9"), new BigDecimal("69.9"), true, 20,

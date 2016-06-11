@@ -2,7 +2,6 @@ package prg1203.assignment;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -119,7 +118,9 @@ public class Application {
 					System.out.println("Item found! Answer 'yes' to confirm delete.");
 					if (sc.nextLine().equalsIgnoreCase("yes")) {
 						items.remove(i);
-						System.out.println("Item removed successfully! Returning...");
+						System.out.println("Item removed successfully! Answer 'yes' to confirm changes into database.");
+						if (sc.nextLine().equalsIgnoreCase("yes"))
+							Utilities.serialize(items, fileName);
 						break;
 					}
 				}
@@ -133,24 +134,24 @@ public class Application {
 				Item result = Item.searchItem(items, sc.nextLine());
 				if (result != null) {
 					int i = items.indexOf(result);
-					System.out.println("Item found!");
+					System.out.println("Item found:\n");
 					System.out.println(items.get(i).toString());
 					System.out.println("Enter new amount: ");
 					int quantity = sc.nextInt();
-					if (quantity > 0) {
-						items.get(i).updateItemQuantity(quantity);
-						break;
+					if (quantity < 0) {
+						System.out.println("Only natural integers are allowed! Returning...\n");
 					} else {
-						System.out.println("Only natural integers are allowed!");
+						items.get(i).updateItemQuantity(quantity);
+						Utilities.serialize(items, fileName);
+						break;
 					}
 				}
-				System.out.println("Returning...");
 				break;
 			}
 			
 			case 5: // List all items
 			{
-				System.out.println("Listing all items...");
+				System.out.println("Listing all items...\n");
 				for (Item x: items) {
 					System.out.println(x.toString() + "\n");
 				}
@@ -165,7 +166,7 @@ public class Application {
 					System.out.println("Item found!");
 					System.out.println(result.toString() + "\n");
 				} else {
-					System.out.println("Item not found! Returning...");
+					System.out.println("Item not found! Returning...\n");
 				}
 				break;
 			}
@@ -192,7 +193,7 @@ public class Application {
 				break;
 			}
 
-			// Load dummy data, only if attached popular.db is unserializable
+			// Load dummy data internal case
 			case 9: // Clear ArrayList and load dummy data
 			{
 				items.clear();
@@ -225,7 +226,7 @@ public class Application {
 		int intChoice  = -1;
 		String strChoice = "";
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("Popular Bookshop Inventory Management System\n");
 		System.out.println("Main Menu:");
 		System.out.println("1) Add an item");

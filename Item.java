@@ -113,16 +113,9 @@ public class Item implements Serializable {
 	}
 	
 	public void updateItemQuantity(int i) {
+		System.out.println("Item amount changed from " + getItemQuantity() + " to " + i);
 		setItemQuantity(i);
 	}
-	
-//	public void updateItemQuantity(ArrayList<Item> items, int amount) {
-//		System.out.println("Search Query [Item Code]:");
-//		Item result = Item.searchItem(items, sc.nextLine());
-//		if (result != null) {
-//			int i = items.indexOf(result);
-//		}
-//	}
 	
 	public static Item searchItem(ArrayList<Item> items, String query) {
 		if (items == null)
@@ -135,14 +128,22 @@ public class Item implements Serializable {
 		return null;
 	}
 	
+	public boolean checkExists(ArrayList<Item> items, String itemCode) {
+		for (Item x: items) {
+			if (x.getItemCode().equalsIgnoreCase(itemCode))
+				return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public String toString() {
-		return "\n[Item Code]:\t" + getItemCode() + 
-				"\n[Item Quantity]:\t" + getItemQuantity() + 
-				"\n[Item Cost]:\t$" + getItemCost() + 
-				"\n[Item Price]:\t$" + getItemPrice() +
-				"\n[Item Status]:\t" + getItemStatus() +
-				"\n[Item Discount]:\t" + getItemDiscount() + "%";
+		return "[Item Code]\t\t\t" + getItemCode() + 
+				"\n[Item Quantity]\t\t\t" + getItemQuantity() + 
+				"\n[Item Cost]\t\t\t$" + getItemCost() + 
+				"\n[Item Price]\t\t\t$" + getItemPrice() +
+				"\n[Item Status]\t\t\t" + getItemStatus() +
+				"\n[Item Discount]\t\t\t" + getItemDiscount() + "%";
 	}
 	
 }

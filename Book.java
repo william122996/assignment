@@ -123,14 +123,14 @@ public class Book extends Item {
 	@Override
 	public String toString() {
 		return super.toString() +
-				"\n[Book Title]\t" + getBookTitle() +
-				"\n[Book Author]\t" + getBookAuthor() +
-				"\n[Book Publisher]\t" + getBookPublisher() +
-				"\n[Book Publisher Company Name]\t" + getBookPublisherCompany() +
-				"\n[Book Publisher Company Address]\t" + getBookPublisherAddress() +
-				"\n[Book ISBN-10]\t" + getBookISBN10() +
-				"\n[Book ISBN-13]\t" + getBookISBN13() +
-				"\n[Book Fiction]\t" + getBookFiction();
+				"\n[Book Title]\t\t\t" + getBookTitle() +
+				"\n[Book Author]\t\t\t" + getBookAuthor() +
+				"\n[Book Publisher]\t\t" + getBookPublisher() +
+				"\n[Book Pub. Company]\t\t" + getBookPublisherCompany() +
+				"\n[Book Pub. Address]\t\t" + getBookPublisherAddress() +
+				"\n[Book ISBN-10]\t\t\t" + getBookISBN10() +
+				"\n[Book ISBN-13]\t\t\t" + getBookISBN13() +
+				"\n[Book Fiction]\t\t\t" + getBookFiction();
 	}
 
 }
