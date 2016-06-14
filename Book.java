@@ -30,6 +30,8 @@ public class Book extends Item {
 		setBookTitle(bookTitle);
 		setBookAuthor(bookAuthor);
 		setBookPublisher(bookPublisher);
+		setBookPublisherCompany(bookPublisherCompany);
+		setBookPublisherAddress(bookPublisherAddress);
 		setBookISBN10(bookISBN10);
 		setBookISBN13(bookISBN13);
 		setBookFiction(bookFiction);
@@ -117,6 +119,27 @@ public class Book extends Item {
 		System.out.println("[Book ISBN-13] (str)");
 		setBookISBN13(sc.nextLine());
 		System.out.println("[Book Fiction] (strgetItemCode()");
+		setBookFiction(sc.nextLine());
+	}
+	
+	@Override
+	public void editItem(Scanner sc) {
+		super.editItem(sc);
+		System.out.println("[Book Title] (str)");
+		setBookTitle(sc.nextLine());
+		System.out.println("[Book Author] (str)");
+		setBookAuthor(sc.nextLine());
+		System.out.println("[Book Publisher] (str)");
+		setBookPublisher(sc.nextLine());
+		System.out.println("[Book Publisher Company Name] (str)");
+		setBookPublisherCompany(sc.nextLine());
+		System.out.println("[Book Publisher Company Address] (str)");
+		setBookPublisherAddress(sc.nextLine());
+		System.out.println("[Book ISBN-10] (str)");
+		setBookISBN10(sc.nextLine());
+		System.out.println("[Book ISBN-13] (str)");
+		setBookISBN13(sc.nextLine());
+		System.out.println("[Book Fiction] (str)");
 		setBookFiction(sc.nextLine());
 	}
 	

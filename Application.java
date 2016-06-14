@@ -5,32 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// ===== PRG1203 OBJECT-ORIENTED PROGRAMMING FUNDAMENTALS ======
-// = Group Assignment April 2016
-// = Faculty of Science and Technology
-// = Sunway University, Malaysia
-// =
-// ===== CONTRIBUTORS ==========================================
-// = 1) TAN HAOLUN		15073141
-// = 2) WILLIAM			14043061
-// = 3) ONG HUEY WEN	14040844
-// = 4) WONG KAH SIAK	15056013
-// =
-// ===== VERSION HISTORY =======================================
-// = Version 1.2
-// = * Added Java file I/O
-// = * Moved addItem() into their respective classes
-// = * Replaced double with BigDecimal for currency fields
-// = 
-// = Version 1.1
-// = * Added searchItem() method
-// = * Updated to be more modular, loop until user exits
-// =
-// = Version 1.0
-// = * Initial release
-// = 
-// =============================================================
-
 public class Application {
 
 	// Main method
@@ -71,20 +45,36 @@ public class Application {
 				System.out.println("2) CD");
 				System.out.println("3) Stationery");
 				System.out.println("4) Cancel");
-				switch(sc.nextInt()) {
+				int i = sc.nextInt();
+				sc.nextLine(); // Consume new line
+				
+				boolean b = false;
+				do {
+					System.out.println("What is the new Item Code?");
+					String itemCode = sc.nextLine();
+					for (int j=0; j<items.size()-1; j++) {
+						b = items.get(j).equals(itemCode);
+						if (b) System.out.println("Item already exist in database.");
+					}
+				} while(b);
+					
+				switch(i) {
 				case 1:
 				{
 					items.add(new Book());
+					Utilities.serialize(items, fileName);
 					break;
 				}
 				case 2:
 				{
 					items.add(new CD());
+					Utilities.serialize(items, fileName);
 					break;
 				}
 				case 3:
 				{
 					items.add(new Stationery());
+					Utilities.serialize(items, fileName);
 					break;
 				}
 				}
@@ -101,7 +91,7 @@ public class Application {
 					int i = items.indexOf(result);
 					System.out.println("Item found! Answer 'yes' to confirm edit.");
 					if (sc.nextLine().equalsIgnoreCase("yes")) {
-						items.get(i).editItem();
+						items.get(i).editItem(sc);
 						break;
 					}
 				}
@@ -163,7 +153,7 @@ public class Application {
 				System.out.println("Search Query [Item Code]: ");
 				Item result = Item.searchItem(items, sc.nextLine());
 				if (result != null) {
-					System.out.println("Item found!");
+					System.out.println("Item found!\n");
 					System.out.println(result.toString() + "\n");
 				} else {
 					System.out.println("Item not found! Returning...\n");

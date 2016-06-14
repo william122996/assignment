@@ -27,6 +27,8 @@ public class Stationery extends Item {
 		setStationeryBrandName(stationeryBrandName);
 		setStationeryType(stationeryType);
 		setStationeryManufacturer(stationeryManufacturer);
+		setStationeryManufacturerCompany(stationeryManufacturerCompany);
+		setStationeryManufacturerAddress(stationeryManufacturerAddress);
 		setStationeryBarcode13(stationeryBarcode13);
 	}
 	
@@ -81,6 +83,23 @@ public class Stationery extends Item {
 	@Override
 	public void addItem() {
 		super.addItem();
+		System.out.println("[Brand Name]");
+		setStationeryBrandName(sc.nextLine());
+		System.out.println("[Type]");
+		setStationeryType(sc.nextLine());
+		System.out.println("[Manufacturer]");
+		setStationeryManufacturer(sc.nextLine());
+		System.out.println("[Manufacturer Company]");
+		setStationeryManufacturerCompany(sc.nextLine());
+		System.out.println("[Manufacturer Address]");
+		setStationeryManufacturerAddress(sc.nextLine());
+		System.out.println("[Barcode-13]");
+		setStationeryBarcode13(sc.nextLine());
+	}
+	
+	@Override
+	public void editItem(Scanner sc) {
+		super.editItem(sc);
 		System.out.println("[Brand Name]");
 		setStationeryBrandName(sc.nextLine());
 		System.out.println("[Type]");

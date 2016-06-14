@@ -94,14 +94,12 @@ public class Item implements Serializable {
 		setItemDiscount(sc.nextInt());
 	}
 	
-	public void editItem() {
-//		String s;
-//		int i;
-//		boolean b;
+	public void editItem(Scanner sc) {
 		System.out.println("Editing item...");
 		System.out.println(this.toString());
 		System.out.println("[Item Quantity] (int)");
 		setItemQuantity(sc.nextInt());
+		sc.nextLine(); // To consume new line token on last input
 		System.out.println("[Item Cost] (dec)");
 		setItemCost(sc.nextBigDecimal());
 		System.out.println("[Item Price] (dec)");
@@ -110,6 +108,7 @@ public class Item implements Serializable {
 		setItemStatus(sc.nextBoolean());
 		System.out.println("[Item Discount] % (int)");
 		setItemDiscount(sc.nextInt());
+		sc.nextLine();
 	}
 	
 	public void updateItemQuantity(int i) {
@@ -128,12 +127,18 @@ public class Item implements Serializable {
 		return null;
 	}
 	
-	public boolean checkExists(ArrayList<Item> items, String itemCode) {
-		for (Item x: items) {
-			if (x.getItemCode().equalsIgnoreCase(itemCode))
-				return true;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj != null && obj instanceof Item) {
+			return this.itemCode == ((Item) obj).itemCode;
 		}
 		return false;
+	}
+	
+	// Hash from itemCode to have consistent result between object
+	@Override
+	public int hashCode() {
+		return itemCode.hashCode();
 	}
 	
 	@Override

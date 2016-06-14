@@ -1,7 +1,7 @@
 package prg1203.assignment;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CD extends Item {
@@ -13,7 +13,7 @@ public class CD extends Item {
 	private String cdDistributorCompany;
 	private String cdDistributorAddress;
 	private int cdNumberOfTrack;
-	private String[] cdTrackListing;
+	private ArrayList<String> cdTrackListing = new ArrayList<String>();
 	private transient Scanner sc = new Scanner(System.in);
 	
 	public CD() {
@@ -25,11 +25,13 @@ public class CD extends Item {
 			BigDecimal itemPrice, boolean itemStatus, int itemDiscount,
 			String cdAlbumTitle, String cdDescription, String cdDistributor,
 			String cdDistributorCompany, String cdDistributorAddress, int cdNumberOfTrack,
-			String[] cdTrackListing) {
+			ArrayList<String> cdTrackListing) {
 		super(itemCode, itemQuantity, itemCost, itemPrice, itemStatus, itemDiscount);
 		setCDAlbumTitle(cdAlbumTitle);
 		setCDDescription(cdDescription);
 		setCDDistributor(cdDistributor);
+		setCDDistributorCompany(cdDistributorCompany);
+		setCDDistributorAddress(cdDistributorAddress);
 		setCDNumberOfTrack(cdNumberOfTrack);
 		setCDTrackListing(cdTrackListing);
 	}
@@ -82,11 +84,11 @@ public class CD extends Item {
 		this.cdNumberOfTrack = cdNumberOfTrack;
 	}
 	
-	private String[] getCDTrackListing() {
+	private ArrayList<String> getCDTrackListing() {
 		return this.cdTrackListing;
 	}
 	
-	private void setCDTrackListing(String[] cdTrackListing) {
+	private void setCDTrackListing(ArrayList<String> cdTrackListing) {
 		this.cdTrackListing = cdTrackListing;
 	}
 	
@@ -105,10 +107,33 @@ public class CD extends Item {
 		setCDDistributorAddress(sc.nextLine());
 		System.out.println("[CD Number of Tracks] (int)");
 		setCDNumberOfTrack(sc.nextInt());
-		String s[] = {};
 		for (int i=0; i < getCDNumberOfTrack(); i++) {
 			System.out.println("[CD Track Name] #" + (i) + " (str)");
-			s[i] = sc.nextLine();
+			//cdTrackListing.add(sc.nextLine());
+			cdTrackListing.set(i, sc.nextLine());
+		}
+	}
+	
+	@Override
+	public void editItem(Scanner sc) {
+		super.editItem(sc);
+		System.out.println("[CD Album Title] (str)");
+		setCDAlbumTitle(sc.nextLine());
+		System.out.println("[CD Description] (str)");
+		setCDDescription(sc.nextLine());
+		System.out.println("[CD Distributor] (str)");
+		setCDDistributor(sc.nextLine());
+		System.out.println("[CD Distributor Company] (str)");
+		setCDDistributorCompany(sc.nextLine());
+		System.out.println("[CD Distributor Address] (str)");
+		setCDDistributorAddress(sc.nextLine());
+		System.out.println("[CD Number of Tracks] (int)");
+		setCDNumberOfTrack(sc.nextInt());
+		sc.nextLine();
+		for (int i=0; i < getCDNumberOfTrack(); i++) {
+			System.out.println("[CD Track Name] #" + (i) + " (str)");
+			//cdTrackListing.add(sc.nextLine());
+			cdTrackListing.set(i, sc.nextLine());
 		}
 	}
 
@@ -121,7 +146,7 @@ public class CD extends Item {
 				"\n[CD Dist. Company]\t\t" + getCDDistributorCompany() +
 				"\n[CD Dist. Address]\t\t" + getCDDistributorAddress() +
 				"\n[CD No. of Track]\t\t" + getCDNumberOfTrack() +
-				"\n[CD Track Listing]\t\t" + Arrays.toString(getCDTrackListing());
+				"\n[CD Track Listing]\t\t" + getCDTrackListing().toString().replaceAll("\\[|\\]", "");
 	}
 	
 }
