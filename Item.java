@@ -3,6 +3,7 @@ package prg1203.assignment;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Item implements Serializable {
@@ -80,35 +81,23 @@ public class Item implements Serializable {
 	}
 	
 	public void addItem() {
-		System.out.println("[Item Code] (str)");
-		setItemCode(sc.nextLine());
-		System.out.println("[Item Quantity] (int)");
-		setItemQuantity(sc.nextInt());
-		System.out.println("[Item Cost] (dec)");
-		setItemCost(sc.nextBigDecimal());
-		System.out.println("[Item Price] (dec)");
-		setItemPrice(sc.nextBigDecimal());
-		System.out.println("[Item Status] (boo)");
-		setItemStatus(sc.nextBoolean());
-		System.out.println("[Item Discount] % (int)");
-		setItemDiscount(sc.nextInt());
-	}
-	
-	public void editItem(Scanner sc) {
-		System.out.println("Editing item...");
-		System.out.println(this.toString());
-		System.out.println("[Item Quantity] (int)");
-		setItemQuantity(sc.nextInt());
-		sc.nextLine(); // To consume new line token on last input
-		System.out.println("[Item Cost] (dec)");
-		setItemCost(sc.nextBigDecimal());
-		System.out.println("[Item Price] (dec)");
-		setItemPrice(sc.nextBigDecimal());
-		System.out.println("[Item Status] (boo)");
-		setItemStatus(sc.nextBoolean());
-		System.out.println("[Item Discount] % (int)");
-		setItemDiscount(sc.nextInt());
-		sc.nextLine();
+		try {
+			System.out.println("[Item Code] (str)");
+			setItemCode(sc.nextLine());
+			System.out.println("[Item Quantity] (int)");
+			setItemQuantity(sc.nextInt());
+			System.out.println("[Item Cost] (dec)");
+			setItemCost(sc.nextBigDecimal());
+			System.out.println("[Item Price] (dec)");
+			setItemPrice(sc.nextBigDecimal());
+			System.out.println("[Item Status] (boo)");
+			setItemStatus(sc.nextBoolean());
+			System.out.println("[Item Discount] % (int)");
+			setItemDiscount(sc.nextInt());
+		} catch (InputMismatchException e) {
+		    System.out.println("Invalid value type!\n");
+		    sc.next();
+		}
 	}
 	
 	public void updateItemQuantity(int i) {
@@ -131,8 +120,9 @@ public class Item implements Serializable {
 	public boolean equals(Object obj) {
 		if (obj != null && obj instanceof Item) {
 			return this.itemCode == ((Item) obj).itemCode;
+		} else {
+			return false;
 		}
-		return false;
 	}
 	
 	// Hash from itemCode to have consistent result between object

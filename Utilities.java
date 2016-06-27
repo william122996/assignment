@@ -23,6 +23,7 @@ public class Utilities {
 
 	
 	// Load object from file
+	@SuppressWarnings("unchecked") // Ignore check on readObject
 	public static ArrayList<Item> deserialize(ArrayList<Item> items, File file, String fileName) throws ClassNotFoundException, EOFException, IOException {
 		
 		FileInputStream fis = null;

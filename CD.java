@@ -113,29 +113,6 @@ public class CD extends Item {
 			cdTrackListing.set(i, sc.nextLine());
 		}
 	}
-	
-	@Override
-	public void editItem(Scanner sc) {
-		super.editItem(sc);
-		System.out.println("[CD Album Title] (str)");
-		setCDAlbumTitle(sc.nextLine());
-		System.out.println("[CD Description] (str)");
-		setCDDescription(sc.nextLine());
-		System.out.println("[CD Distributor] (str)");
-		setCDDistributor(sc.nextLine());
-		System.out.println("[CD Distributor Company] (str)");
-		setCDDistributorCompany(sc.nextLine());
-		System.out.println("[CD Distributor Address] (str)");
-		setCDDistributorAddress(sc.nextLine());
-		System.out.println("[CD Number of Tracks] (int)");
-		setCDNumberOfTrack(sc.nextInt());
-		sc.nextLine();
-		for (int i=0; i < getCDNumberOfTrack(); i++) {
-			System.out.println("[CD Track Name] #" + (i) + " (str)");
-			//cdTrackListing.add(sc.nextLine());
-			cdTrackListing.set(i, sc.nextLine());
-		}
-	}
 
 	@Override
 	public String toString() {

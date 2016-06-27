@@ -48,38 +48,32 @@ public class Application {
 				int i = sc.nextInt();
 				sc.nextLine(); // Consume new line
 				
-				boolean b = false;
-				do {
-					System.out.println("What is the new Item Code?");
-					String itemCode = sc.nextLine();
-					for (int j=0; j<items.size()-1; j++) {
-						b = items.get(j).equals(itemCode);
-						if (b) System.out.println("Item already exist in database.");
-					}
-				} while(b);
-					
+				Item temp = null;
+
 				switch(i) {
 				case 1:
 				{
-					items.add(new Book());
-					Utilities.serialize(items, fileName);
+					temp = new Book();
 					break;
 				}
 				case 2:
 				{
-					items.add(new CD());
-					Utilities.serialize(items, fileName);
+					temp = new CD();
 					break;
 				}
 				case 3:
 				{
-					items.add(new Stationery());
-					Utilities.serialize(items, fileName);
+					temp = new Stationery();
 					break;
 				}
 				}
-				Utilities.serialize(items, fileName);
-				System.out.println("Item saved successfully.");
+				if (!items.equals(temp)) {
+					items.add(temp);
+					Utilities.serialize(items, fileName);
+					System.out.println("Item saved successfully.");
+					break;
+				}
+				System.out.println("Item already existed!");
 				break;
 			}
 			
@@ -91,7 +85,7 @@ public class Application {
 					int i = items.indexOf(result);
 					System.out.println("Item found! Answer 'yes' to confirm edit.");
 					if (sc.nextLine().equalsIgnoreCase("yes")) {
-						items.get(i).editItem(sc);
+						items.get(i).addItem();
 						break;
 					}
 				}
