@@ -13,7 +13,7 @@ Faculty of Science and Technology
 Sunway University, Malaysia
 
 1) TAN HAOLUN		15073141
-2) WILLIAM			14043061
+2) WILLIAM CHU WEI CHUEN	14043061
 3) ONG HUEY WEN		14040844
 4) WONG KAH SIAK	15056013
 */
